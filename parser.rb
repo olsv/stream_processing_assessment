@@ -1,10 +1,8 @@
-require_relative 'payload'
-
 module Parser
-  def self.call(enumerable)
+  def self.call(loader, enumerable)
     Enumerator.new do |yielder|
       enumerable.each do |chunk|
-        yielder << Payload.load(chunk)
+        yielder << loader.load(chunk)
       end
     end.lazy
   end

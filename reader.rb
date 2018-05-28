@@ -1,11 +1,11 @@
 module Reader
-  def self.call(file)
+  def self.call(boundary, file)
     file = File.open(file, 'r')
 
     Enumerator.new do |yielder|
       begin
         file.each_line do |line|
-          if line.match(/--myboundary/)
+          if line.match(/#{ boundary }/)
             text_body = file.readline.match(/Content-Type: text\/plain/)
             size = file.readline.match(/Content-Length: (\d+)/) && $1.to_i
 
